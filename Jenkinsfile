@@ -9,7 +9,7 @@ pipeline
           stage('Git clone') {
             steps
              {
-              git branch: 'main', url: 'https://github.com/kuldeepsingh99/openshift-jenkins-cicd.git'
+              git branch: 'main', url: 'https://github.com/antoniorojoa/openshift-jenkins-cicd.git'
               script {
                     def pom = readMavenPom file: 'pom.xml'
                     version = pom.version
@@ -52,7 +52,7 @@ pipeline
               expression {
                 openshift.withCluster() {
                   openshift.withProject() {
-                    return !openshift.selector("bc", "sample-app-jenkins-new").exists();
+                    return !openshift.selector("bc", "sample-app-jenkins").exists();
                   }
                 }
               }
@@ -61,7 +61,7 @@ pipeline
               script {
                 openshift.withCluster() {
                   openshift.withProject() {
-                    openshift.newBuild("--name=sample-app-jenkins-new", "--image-stream=redhat-openjdk18-openshift:1.12", "--binary=true")
+                    openshift.newBuild("--name=sample-app-jenkins", "--image-stream=redhat-openjdk18-openshift:1.12", "--binary=true")
                   }
                 }
               }
@@ -76,7 +76,7 @@ pipeline
               script {
                 openshift.withCluster() {
                   openshift.withProject() {
-                    openshift.selector("bc", "sample-app-jenkins-new").startBuild("--from-dir=./ocp","--follow", "--wait=true")
+                    openshift.selector("bc", "sample-app-jenkins").startBuild("--from-dir=./ocp","--follow", "--wait=true")
                   }
                 }
               }
@@ -87,7 +87,7 @@ pipeline
               expression {
                 openshift.withCluster() {
                   openshift.withProject() {
-                    return !openshift.selector('dc', 'sample-app-jenkins-new').exists()
+                    return !openshift.selector('dc', 'sample-app-jenkins').exists()
                   }
                 }
               }
@@ -96,7 +96,7 @@ pipeline
               script {
                 openshift.withCluster() {
                   openshift.withProject() {
-                    def app = openshift.newApp("sample-app-jenkins-new", "--as-deployment-config")
+                    def app = openshift.newApp("sample-app-jenkins", "--as-deployment-config")
                     app.narrow("svc").expose();
                   }
                 }
