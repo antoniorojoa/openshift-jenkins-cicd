@@ -20,26 +20,23 @@ pipeline
           stage("Compile") {
 			steps {
 				script {
-					sh "mvn clean compile -P maven-https -Dmaven.test.skip=true"  
+					sh "mvn clean compile -P maven -Dmaven.test.skip=true"  
 				}   
 			}
 		  }
           stage("test") {
 			steps {
 				script {
-					sh "mvn clean package test verify  -P maven-https   verify -Dpw=CaliD@d789  -Dvar1=value1 -DreportPath=target/template3.txt -DreportPathTemplate=target/template2.txt -DreportStReplace=XXX"  
+					sh "mvn clean package test verify  -P maven verify -Dpw=CaliD@d789 -Dvar1=value1 -DreportPath=target/template3.txt -DreportPathTemplate=target/template2.txt -DreportStReplace=XXX"  
 				}   
 			}
           }
           stage("sonarqube") {
-			 when {
-                expression { "${JOB_SONAR_ENABLE}" == "true" }
-            }
 			steps {
 				script {
-				    echo "Analizing the project with SonarQube."
+				    	echo "Analizing the project with SonarQube."
 					//sh "mvn sonar:sonar -Dsonar.host.url=https://sonar.sdos.es  -Dsonar.projectKey=${SONAR_PROJECT_KEY} -Dsonar.sources=src/main/java -Dsonar.tests=src/test/java -Dsonar.login=a1abce7023aa782d0d5721c5ef37d61494dd3860   -Dsonar.exclusions=**/com/gurock/testrail/APIClient.java,**/com/gurock/testrail/APIException.java   -Dsonar.binaries=target "
-					sh "mvn sonar:sonar -Dsonar.host.url=http://sonar.sonarqube.svc.cluster.local:9000  -Dsonar.projectKey=openshift-jenkins-cicd -Dsonar.login=a1abce7023aa782d0d5721c5ef37d61494dd3860"
+					sh "mvn sonar:sonar -Dsonar.host.url=http://sonar.sonarqube.svc.cluster.local:9000  -Dsonar.projectKey=openshift-jenkins-cicd -Dsonar.login=sqa_6a1a0dd1ac95bc0ecc7999ad550d8aa8da6a9c39"
 				}   
 			}
           }
