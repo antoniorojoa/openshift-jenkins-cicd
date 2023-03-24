@@ -9,7 +9,7 @@ pipeline
           stage('Git clone') {
             steps
              {
-              checkout([$class: 'GitSCM', branches: [[name: '*/develop']], extensions: [[$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: '/tekton']]]], userRemoteConfigs: [[credentialsId: 'bf6f7b2d-a082-4f4b-ae79-2f44ee3aa774', url: 'https://gitlab.alten.es/laboratorio_qa_devops/openshift-pipelines.git']]])
+              checkout([$class: 'GitSCM', branches: [[name: '*/develop']], extensions: [[$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: '/openshift-jenkins-cicd']]]], userRemoteConfigs: [[credentialsId: 'bf6f7b2d-a082-4f4b-ae79-2f44ee3aa774', url: 'https://gitlab.alten.es/laboratorio_qa_devops/openshift-pipelines.git']]])
 	      //git branch: 'main', url: 'https://github.com/antoniorojoa/openshift-jenkins-cicd.git'
 	      //checkout([$class: 'GitSCM', branches: [[name: '*/develop']], extensions: [], userRemoteConfigs: [[credentialsId: 'bf6f7b2d-a082-4f4b-ae79-2f44ee3aa774', url: 'https://gitlab.alten.es/laboratorio_qa_devops/openshift-pipelines.git']]])
               sh "pwd"
