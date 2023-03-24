@@ -10,11 +10,17 @@ pipeline
             steps
              {
               git branch: 'main', url: 'https://github.com/antoniorojoa/openshift-jenkins-cicd.git'
-              script {
-                    def pom = readMavenPom file: 'pom.xml'
-                    version = pom.version
-              }
+              sh "ls -ltr"
           //    sh "mvn install"
+            }
+          }
+	  stage("read pom") {
+            steps {
+              script {
+                IMAGE = readMavenPom().getArtifactId()
+                VERSION = readMavenPom().getVersion() 
+                println " version - ${VERSION} - ${IMAGE}"
+              }
             }
           }
           stage("Compile") {
