@@ -14,7 +14,7 @@ pipeline
 	      //checkout([$class: 'GitSCM', branches: [[name: '*/develop']], extensions: [], userRemoteConfigs: [[credentialsId: 'bf6f7b2d-a082-4f4b-ae79-2f44ee3aa774', url: 'https://gitlab.alten.es/laboratorio_qa_devops/openshift-pipelines.git']]])
               sh "pwd"
 	      sh "ls -la"
-	      sh "ls -la jenkins"
+	      sh "tree jenkins"
           //    sh "mvn install"
             }
           }
